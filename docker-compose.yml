@@ -4,13 +4,17 @@ services:
     hostname: geth-bootnode
     environment:
       - nodekeyhex=08f0e1dee5c1b4645f3331a566009e41a4514b6cd28656d63d0449ecf812812b #Needs to be fix, so that the miners know the resulting enode id
+      - TZ=Europe/Berlin
+      - SET_CONTAINER_TIMEZONE=true
+      - CONTAINER_TIMEZONE=Europe/Berlin
     build:
       context: ./bootnode
     ports:
       - 30301:30301/udp
+      - 30303:30303/udp
     networks:
       chainnet:
-        ipv4_address: 172.25.0.101 # The miners need to know the IP address later on
+        ipv4_address: 192.168.10.10 # The miners need to know the IP address later on
 
   geth-dev-miner-1:
     hostname: geth-dev-miner-1
@@ -19,7 +23,10 @@ services:
     environment:
       - address=0x8cc5a1a0802db41db826c2fcb72423744338dcb0 #derived from the private key which is passed in the args
       - bootnodeId=76a8171707eca17647a47ca99ffd348927dfa60102792ea349a25d5192e61855be83b786e376276a306afcceea4ffd1c9c77e4370b417efc39f328a0d068004c #derived from the nodekeyhex of the bootnode
-      - bootnodeIp=172.25.0.101
+      - bootnodeIp=192.168.10.10
+      - "TZ=Europe/Berlin"
+      - SET_CONTAINER_TIMEZONE=true
+      - CONTAINER_TIMEZONE=Europe/Berlin
     build:
       context: ./miner
       args:
@@ -27,10 +34,10 @@ services:
         password: pass
     container_name: geth-miner-1
     volumes:
-      - eth-data-1:/root/.ethash
+      - /eth-data-1:/root/.ethash
     networks:
       chainnet:
-        ipv4_address: 172.25.0.102 # The monitor needs to know this address
+        ipv4_address: 192.168.10.11 # The monitor needs to know this address
 
   geth-dev-miner-2:
     hostname: geth-dev-miner-2
@@ -39,7 +46,10 @@ services:
     environment:
       - address=0x3590aca93338b0721966a8d0c96ebf2c4c87c544 #derived from the private key which is passed in the args
       - bootnodeId=76a8171707eca17647a47ca99ffd348927dfa60102792ea349a25d5192e61855be83b786e376276a306afcceea4ffd1c9c77e4370b417efc39f328a0d068004c #derived from the nodekeyhex of the bootnode
-      - bootnodeIp=172.25.0.101
+      - bootnodeIp=192.168.10.10
+      - "TZ=Europe/Berlin"
+      - SET_CONTAINER_TIMEZONE=true
+      - CONTAINER_TIMEZONE=Europe/Berlin
     build:
       context: ./miner
       args:
@@ -47,10 +57,10 @@ services:
         password: word
     container_name: geth-miner-2
     volumes:
-     - eth-data-2:/root/.ethash
+     - /eth-data-2:/root/.ethash
     networks:
       chainnet:
-        ipv4_address: 172.25.0.104
+        ipv4_address: 192.168.10.12
 
   geth-dev-node:
      hostname: geth-dev-node
@@ -59,7 +69,10 @@ services:
      environment:
        - address=0x3590aca93338b0721966a8d0c96ebf2c4c87c544 #derived from the private key which is passed in the args
        - bootnodeId=76a8171707eca17647a47ca99ffd348927dfa60102792ea349a25d5192e61855be83b786e376276a306afcceea4ffd1c9c77e4370b417efc39f328a0d068004c #derived from the nodekeyhex of the bootnode
-       - bootnodeIp=172.25.0.101
+       - bootnodeIp=192.168.10.10
+       - "TZ=Europe/Berlin"
+       - SET_CONTAINER_TIMEZONE=true
+       - CONTAINER_TIMEZONE=Europe/Berlin
      build:
        context: ./node
        args:
@@ -74,10 +87,10 @@ services:
        timeout: 5s
        retries: 30
      volumes:
-      - eth-data-3:/root/.ethash
+      - /eth-data-3:/root/.ethash
      networks:
        chainnet:
-         ipv4_address: 172.25.0.110
+         ipv4_address: 192.168.10.13
 
   geth-dev-swarm-1:
      hostname: geth-dev-swarm-1
@@ -86,7 +99,10 @@ services:
      environment:
        - address=8cc5a1a0802db41db826c2fcb72423744338dcb0 #derived from the private key which is passed in the args
        - bootnodeId=76a8171707eca17647a47ca99ffd348927dfa60102792ea349a25d5192e61855be83b786e376276a306afcceea4ffd1c9c77e4370b417efc39f328a0d068004c #derived from the nodekeyhex of the bootnode
-       - bootnodeIp=172.25.0.101
+       - bootnodeIp=192.168.10.10
+       - "TZ=Europe/Berlin"
+       - SET_CONTAINER_TIMEZONE=true
+       - CONTAINER_TIMEZONE=Europe/Berlin
      build:
        context: ./swarm
        args:
@@ -97,10 +113,10 @@ services:
        - 8500:8500
        - 30399:30399/udp
      volumes:
-      - eth-data-4:/root/.ethash
+      - /eth-data-4:/root/.ethash
      networks:
        chainnet:
-         ipv4_address: 172.25.0.111
+         ipv4_address: 192.168.10.14
 
   geth-dev-swarm-2:
      hostname: geth-dev-miner-3
@@ -109,7 +125,10 @@ services:
      environment:
        - address=3590aca93338b0721966a8d0c96ebf2c4c87c544 #derived from the private key which is passed in the args
        - bootnodeId=76a8171707eca17647a47ca99ffd348927dfa60102792ea349a25d5192e61855be83b786e376276a306afcceea4ffd1c9c77e4370b417efc39f328a0d068004c #derived from the nodekeyhex of the bootnode
-       - bootnodeIp=172.25.0.101
+       - bootnodeIp=192.168.10.10
+       - "TZ=Europe/Berlin"
+       - SET_CONTAINER_TIMEZONE=true
+       - CONTAINER_TIMEZONE=Europe/Berlin
      build:
        context: ./swarm
        args:
@@ -120,15 +139,19 @@ services:
        - 8501:8500
        - 30340:30399/udp
      volumes:
-      - eth-data-5:/root/.ethash
+      - /eth-data-5:/root/.ethash
      networks:
        chainnet:
-         ipv4_address: 172.25.0.112
+         ipv4_address: 192.168.10.15
 
   geth-explorer:
     hostname: geth-explorer
     depends_on:
       - geth-dev-node
+    environment:
+      - "TZ=Europe/Berlin"
+      - SET_CONTAINER_TIMEZONE=true
+      - CONTAINER_TIMEZONE=Europe/Berlin
     ports:
       - 8080:8080
     build:
@@ -136,14 +159,14 @@ services:
     container_name: geth-explorer
     networks:
       chainnet:
-        ipv4_address: 172.25.0.125
+        ipv4_address: 192.168.10.16
 
 networks:
   chainnet:
     driver: bridge
     ipam:
       config:
-      - subnet: 172.25.0.0/24
+      - subnet: 192.168.10.0/16
 
 volumes:
   eth-data-1:

@@ -6,9 +6,9 @@
     "eip150Hash": "0x0000000000000000000000000000000000000000000000000000000000000000",
     "eip155Block": 3,
     "eip158Block": 3,
-    "byzantiumBlock": 4,
+    "byzantiumBlock": 114,
     "clique": {
-      "period": 5,
+      "period": 2,
       "epoch": 30000
     }
   },

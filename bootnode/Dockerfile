@@ -1,8 +1,9 @@
 FROM ubuntu:xenial
+ENV TZ='Europe/Berlin'
 
 RUN apt-get update \
-     && apt-get install -y wget software-properties-common \
-     && rm -rf /var/lib/apt/lists/*
+     && apt-get install -y wget software-properties-common
+
 
 WORKDIR "/root"
 
