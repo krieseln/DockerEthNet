@@ -9,7 +9,6 @@ WORKDIR "/root"
 
 RUN add-apt-repository -y ppa:ethereum/ethereum
 
-ARG binary
 RUN apt-get update \
      && apt-get install -y ethereum
 
