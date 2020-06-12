@@ -20,7 +20,7 @@ services:
     depends_on:
       - bootnode #Container auf dem dieser Container aufbaut
     environment: #Umgebungsvariablen die in den Container übergeben werden
-      - address=0x8cc5a1a0802db41db826c2fcb72423744338dcb0 #Aus dem Private Key abgeleitete Adresse des Accounts der mit dem Miner verbunden wird
+      - address=0xee64c6b3bcF61E53E225778A23C2218382ffbDf4 #Aus dem Private Key abgeleitete Adresse des Accounts der mit dem Miner verbunden wird
       - bootnodeId=76a8171707eca17647a47ca99ffd348927dfa60102792ea349a25d5192e61855be83b786e376276a306afcceea4ffd1c9c77e4370b417efc39f328a0d068004c #Aus dem nodekeyhex abgeleitete Enode ID der Bootnode
       - bootnodeIp=172.25.0.101
       - TZ=Europe/Berlin #Setzen der Zeitzone um Netzwerkprobleme durch Zeitabweichungen zu verhindern
@@ -29,8 +29,8 @@ services:
     build:
       context: ./miner
       args:
-        privatekey: df504d175ae63abf209bad9dda965310d99559620550e74521a6798a41215f46 #Private Key des mit dem Miner verbundenen Accounts, nur in Testumgebungen verwenden
-        password: pass #Passwort des mit dem Miner verbundenen Accounts, nur in Testumgebungen verwenden!
+        privatekey: fa6bd2d9ce090b0df1f7d8d17cb4eff46f2522572cdea74f1d9108f34d3fd6b6 #Private Key des mit dem Miner verbundenen Accounts, nur in Testumgebungen verwenden
+        password: superpasswort #Passwort des mit dem Miner verbundenen Accounts, nur in Testumgebungen verwenden!
     container_name: miner-1
     volumes:
       - /eth-data-1:/root/.ethash
@@ -43,7 +43,7 @@ services:
     depends_on:
       - bootnode #Container auf dem dieser Container aufbaut
     environment: #Umgebungsvariablen die in den Container übergeben werden
-      - address=0x3590aca93338b0721966a8d0c96ebf2c4c87c544 #Aus dem Private Key abgeleitete Adresse des Accounts der mit dem Miner verbunden wird
+      - address=0xaDCc8bE8284d4C872d9beEC8692B2FC9d9E7A01A #Aus dem Private Key abgeleitete Adresse des Accounts der mit dem Miner verbunden wird
       - bootnodeId=76a8171707eca17647a47ca99ffd348927dfa60102792ea349a25d5192e61855be83b786e376276a306afcceea4ffd1c9c77e4370b417efc39f328a0d068004c #Aus dem nodekeyhex abgeleitete Enode ID der Bootnode
       - bootnodeIp=172.25.0.101
       - TZ=Europe/Berlin #Setzen der Zeitzone um Netzwerkprobleme durch Zeitabweichungen zu verhindern
@@ -52,8 +52,8 @@ services:
     build:
       context: ./miner
       args:
-        privatekey: bc5b578e0dcb2dbf98dd6e5fe62cb5a28b84a55e15fc112d4ca88e1f62bd7c35 #Private Key des mit dem Miner verbundenen Accounts, nur in Testumgebungen verwenden!
-        password: word #Passwort des mit dem Miner verbundenen Accounts, nur in Testumgebungen verwenden!
+        privatekey: eca4fa046643d9a9733cc371c68dfe15992946a49f4c50b4fb3d0c2d1b306118 #Private Key des mit dem Miner verbundenen Accounts, nur in Testumgebungen verwenden!
+        password: bestespasswort #Passwort des mit dem Miner verbundenen Accounts, nur in Testumgebungen verwenden!
     container_name: miner-2
     volumes:
       - /eth-data-2:/root/.ethash
