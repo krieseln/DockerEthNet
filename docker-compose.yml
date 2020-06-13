@@ -160,6 +160,23 @@ services:
       chainnet:
         ipv4_address: 172.25.0.125
 
+  ether-viz:
+    hostname: ether-viz
+    container_name: ether-viz
+    depends_on:
+      - geth-node
+    environment: #Umgebungsvariablen die in den Container übergeben werden
+      - TZ=Europe/Berlin #Setzen der Zeitzone um Netzwerkprobleme durch Zeitabweichungen zu verhindern
+      - SET_CONTAINER_TIMEZONE=true #Setzen der Zeitzone um Netzwerkprobleme durch Zeitabweichungen zu verhindern
+      - CONTAINER_TIMEZONE=Europe/Berlin #Setzen der Zeitzone um Netzwerkprobleme durch Zeitabweichungen zu verhindern
+    ports:
+    - 3000:3000
+    build:
+      context: ./ether-viz
+    networks:
+      chainnet:
+        ipv4_address: 172.25.0.135
+
 networks: #Netzwerk in dem sich alle Docker Container befinden
   chainnet:
     driver: bridge
