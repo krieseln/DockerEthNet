@@ -9,6 +9,7 @@ RUN apk add --update git make g++ && \
 WORKDIR "/opt/ether-viz/EtherVizApp/client"
 RUN npm install
 
-CMD npm run start
+CMD npm run start &&\
+    sh
 
 EXPOSE 3000
