@@ -22,7 +22,7 @@ ENV address=""
 ENV bootnodeId=""
 ENV bootnodeIp=""
 
-CMD exec geth --bootnodes "enode://$bootnodeId@$bootnodeIp:30301" --networkid "1337" --verbosity=4 --rpc --rpcaddr "0.0.0.0" --rpcport 8547 --rpcapi "eth,web3,net,admin,debug,db,miner" --rpccorsdomain "*" --syncmode="full"
+CMD exec geth --bootnodes "enode://$bootnodeId@$bootnodeIp:30301" --networkid "1337" --verbosity=4 --syncmode=full --mine --gasprice "0" --etherbase $address --unlock $address --password ~/.accountpassword --rpc --rpcaddr "0.0.0.0" --rpcport 8547 --rpcapi "eth,web3,net,admin,debug,db,miner,personal" --rpccorsdomain "*" --allow-insecure-unlock
 
 EXPOSE 8547
 EXPOSE 30303
