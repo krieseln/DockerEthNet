@@ -22,7 +22,7 @@ ENV address=""
 ENV bootnodeId=""
 ENV bootnodeIp=""
 
-CMD exec geth --bootnodes "enode://$bootnodeId@$bootnodeIp:30301" --networkid "1337" --verbosity=4 --rpc --rpcaddr "0.0.0.0" --rpcport 8546 --rpcapi "eth,web3,net,admin,debug,db" --rpccorsdomain "*" --syncmode="full"
+CMD exec geth --bootnodes "enode://$bootnodeId@$bootnodeIp:30301" --networkid "1337" --verbosity=4 --rpc --rpcaddr "0.0.0.0" --rpcport 8546 --rpcapi "eth,web3,net,admin,debug,db,miner" --rpccorsdomain "*" --syncmode="full"
 
 EXPOSE 8546
 EXPOSE 30303
