@@ -33,7 +33,7 @@ services:
         password: pass #Passwort des mit dem Miner verbundenen Accounts, nur in Testumgebungen verwenden!
     container_name: miner1_test
     ports:
-      - 8545:8546
+      - 8546:8546
     volumes:
       - /eth-data-1:/root/.ethash
     networks:
@@ -58,7 +58,7 @@ services:
         password: word #Passwort des mit dem Miner verbundenen Accounts, nur in Testumgebungen verwenden!
     container_name: miner-2_test
     ports:
-      - 8545:8547
+      - 8547:8547
     volumes:
       - /eth-data-2:/root/.ethash
     networks:
