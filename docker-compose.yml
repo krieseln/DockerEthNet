@@ -1,7 +1,7 @@
 version: "3"
 services:
-  bootnode:
-    hostname: bootnode
+  bootnode_test:
+    hostname: bootnode_test
     environment: #Umgebungsvariablen die in den Container übergeben werden
       - nodekeyhex=08f0e1dee5c1b4645f3331a566009e41a4514b6cd28656d63d0449ecf812812b #Bestimmt die enode ID der Bootnode für die anderen Nodes
       - TZ=Europe/Berlin #Setzen der Zeitzone um Netzwerkprobleme durch Zeitabweichungen zu verhindern
@@ -12,63 +12,67 @@ services:
     ports:
       - 30301:30301/udp # Port über den Nodes über die Bootnode andere Nodes finden können
     networks:
-      chainnet:
-        ipv4_address: 172.25.0.101 # IP-Adresse der Bootnode über die sich die anderen Nodes mit dieser verbinden können
+      chainnet_test:
+        ipv4_address: 172.26.0.101 # IP-Adresse der Bootnode über die sich die anderen Nodes mit dieser verbinden können
 
   miner-1:
-    hostname: miner-1
+    hostname: miner1_test
     depends_on:
-      - bootnode #Container auf dem dieser Container aufbaut
+      - bootnode_test #Container auf dem dieser Container aufbaut
     environment: #Umgebungsvariablen die in den Container übergeben werden
       - address=0x8cc5a1a0802db41db826c2fcb72423744338dcb0 #Aus dem Private Key abgeleitete Adresse des Accounts der mit dem Miner verbunden wird
       - bootnodeId=76a8171707eca17647a47ca99ffd348927dfa60102792ea349a25d5192e61855be83b786e376276a306afcceea4ffd1c9c77e4370b417efc39f328a0d068004c #Aus dem nodekeyhex abgeleitete Enode ID der Bootnode
-      - bootnodeIp=172.25.0.101
+      - bootnodeIp=172.26.0.101
       - TZ=Europe/Berlin #Setzen der Zeitzone um Netzwerkprobleme durch Zeitabweichungen zu verhindern
       - SET_CONTAINER_TIMEZONE=true #Setzen der Zeitzone um Netzwerkprobleme durch Zeitabweichungen zu verhindern
       - CONTAINER_TIMEZONE=Europe/Berlin #Setzen der Zeitzone um Netzwerkprobleme durch Zeitabweichungen zu verhindern
     build:
-      context: ./miner
+      context: ./miner1
       args:
         privatekey: df504d175ae63abf209bad9dda965310d99559620550e74521a6798a41215f46 #Private Key des mit dem Miner verbundenen Accounts, nur in Testumgebungen verwenden
         password: pass #Passwort des mit dem Miner verbundenen Accounts, nur in Testumgebungen verwenden!
-    container_name: miner-1
+    container_name: miner1_test
+    ports:
+      - 8545:8546
     volumes:
       - /eth-data-1:/root/.ethash
     networks:
-      chainnet:
-        ipv4_address: 172.25.0.102
+      chainnet_test:
+        ipv4_address: 172.26.0.102
 
   miner-2:
-    hostname: miner-2
+    hostname: miner-2_test
     depends_on:
-      - bootnode #Container auf dem dieser Container aufbaut
+      - bootnode_test #Container auf dem dieser Container aufbaut
     environment: #Umgebungsvariablen die in den Container übergeben werden
       - address=0x3590aca93338b0721966a8d0c96ebf2c4c87c544 #Aus dem Private Key abgeleitete Adresse des Accounts der mit dem Miner verbunden wird
       - bootnodeId=76a8171707eca17647a47ca99ffd348927dfa60102792ea349a25d5192e61855be83b786e376276a306afcceea4ffd1c9c77e4370b417efc39f328a0d068004c #Aus dem nodekeyhex abgeleitete Enode ID der Bootnode
-      - bootnodeIp=172.25.0.101
+      - bootnodeIp=172.26.0.101
       - TZ=Europe/Berlin #Setzen der Zeitzone um Netzwerkprobleme durch Zeitabweichungen zu verhindern
       - SET_CONTAINER_TIMEZONE=true #Setzen der Zeitzone um Netzwerkprobleme durch Zeitabweichungen zu verhindern
       - CONTAINER_TIMEZONE=Europe/Berlin #Setzen der Zeitzone um Netzwerkprobleme durch Zeitabweichungen zu verhindern
     build:
-      context: ./miner
+      context: ./miner2
       args:
         privatekey: bc5b578e0dcb2dbf98dd6e5fe62cb5a28b84a55e15fc112d4ca88e1f62bd7c35 #Private Key des mit dem Miner verbundenen Accounts, nur in Testumgebungen verwenden!
         password: word #Passwort des mit dem Miner verbundenen Accounts, nur in Testumgebungen verwenden!
-    container_name: miner-2
+    container_name: miner-2_test
+    ports:
+      - 8545:8547
     volumes:
       - /eth-data-2:/root/.ethash
     networks:
-      chainnet:
-        ipv4_address: 172.25.0.104
+      chainnet_test:
+        ipv4_address: 172.26.0.104
 
   geth-node:
-     hostname: geth-node
+     hostname: geth-node_test
      depends_on:
        - miner-2 #Container auf dem dieser Container aufbaut
      environment: #Umgebungsvariablen die in den Container übergeben werden
        - address=0x3590aca93338b0721966a8d0c96ebf2c4c87c544 #Aus dem Private Key abgeleitete Adresse des Accounts der mit der Node verbunden wird
        - bootnodeId=76a8171707eca17647a47ca99ffd348927dfa60102792ea349a25d5192e61855be83b786e376276a306afcceea4ffd1c9c77e4370b417efc39f328a0d068004c #Aus dem nodekeyhex abgeleitete Enode ID der Bootnode
-       - bootnodeIp=172.25.0.101
+       - bootnodeIp=172.26.0.101
        - TZ=Europe/Berlin #Setzen der Zeitzone um Netzwerkprobleme durch Zeitabweichungen zu verhindern
        - SET_CONTAINER_TIMEZONE=true #Setzen der Zeitzone um Netzwerkprobleme durch Zeitabweichungen zu verhindern
        - CONTAINER_TIMEZONE=Europe/Berlin #Setzen der Zeitzone um Netzwerkprobleme durch Zeitabweichungen zu verhindern
@@ -77,7 +81,7 @@ services:
        args:
          privatekey: bc5b578e0dcb2dbf98dd6e5fe62cb5a28b84a55e15fc112d4ca88e1f62bd7c35 #Private Key des mit dem Miner verbundenen Accounts, nur in Testumgebungen verwenden!
          password: word #Passwort des mit der Node verbundenen Accounts, nur in Testumgebungen verwenden!
-     container_name: geth-node
+     container_name: geth-node_test
      ports:
        - 8545:8545
      volumes:
@@ -88,17 +92,17 @@ services:
        timeout: 5s
        retries: 30
      networks:
-       chainnet:
-         ipv4_address: 172.25.0.110
+       chainnet_test:
+         ipv4_address: 172.26.0.110
 
   swarm-node-1:
-     hostname: swarm-node-1
+     hostname: swarm-node-1_test
      depends_on:
        - geth-node #Container auf dem dieser Container aufbaut
      environment: #Umgebungsvariablen die in den Container übergeben werden
        - address=8cc5a1a0802db41db826c2fcb72423744338dcb0 #Aus dem Private Key abgeleitete Adresse des Accounts der mit der Node verbunden wird
        - bootnodeId=76a8171707eca17647a47ca99ffd348927dfa60102792ea349a25d5192e61855be83b786e376276a306afcceea4ffd1c9c77e4370b417efc39f328a0d068004c #Aus dem nodekeyhex abgeleitete Enode ID der Bootnode
-       - bootnodeIp=172.25.0.101
+       - bootnodeIp=172.26.0.101
        - TZ=Europe/Berlin #Setzen der Zeitzone um Netzwerkprobleme durch Zeitabweichungen zu verhindern
        - SET_CONTAINER_TIMEZONE=true #Setzen der Zeitzone um Netzwerkprobleme durch Zeitabweichungen zu verhindern
        - CONTAINER_TIMEZONE=Europe/Berlin #Setzen der Zeitzone um Netzwerkprobleme durch Zeitabweichungen zu verhindern
@@ -107,24 +111,24 @@ services:
        args:
          privatekey: df504d175ae63abf209bad9dda965310d99559620550e74521a6798a41215f46
          password: pass #Passwort des mit der Node verbundenen Accounts, nur in Testumgebungen verwenden!
-     container_name: swarm-node-1
+     container_name: swarm-node-1_test
      ports:
        - 8500:8500
        - 30399:30399/udp
      volumes:
          - /eth-data-4:/root/.ethash
      networks:
-       chainnet:
-         ipv4_address: 172.25.0.111
+       chainnet_test:
+         ipv4_address: 172.26.0.111
 
   swarm-node-2:
-     hostname: swarm-node-2
+     hostname: swarm-node-2_test
      depends_on:
        - geth-node #Container auf dem dieser Container aufbaut
      environment: #Umgebungsvariablen die in den Container übergeben werden
        - address=3590aca93338b0721966a8d0c96ebf2c4c87c544 #Aus dem Private Key abgeleitete Adresse des Accounts der mit der Node verbunden wird
        - bootnodeId=76a8171707eca17647a47ca99ffd348927dfa60102792ea349a25d5192e61855be83b786e376276a306afcceea4ffd1c9c77e4370b417efc39f328a0d068004c #Aus dem nodekeyhex abgeleitete Enode ID der Bootnode
-       - bootnodeIp=172.25.0.101
+       - bootnodeIp=172.26.0.101
        - TZ=Europe/Berlin #Setzen der Zeitzone um Netzwerkprobleme durch Zeitabweichungen zu verhindern
        - SET_CONTAINER_TIMEZONE=true #Setzen der Zeitzone um Netzwerkprobleme durch Zeitabweichungen zu verhindern
        - CONTAINER_TIMEZONE=Europe/Berlin #Setzen der Zeitzone um Netzwerkprobleme durch Zeitabweichungen zu verhindern
@@ -133,18 +137,18 @@ services:
        args:
          privatekey: bc5b578e0dcb2dbf98dd6e5fe62cb5a28b84a55e15fc112d4ca88e1f62bd7c35
          password: pass #Passwort des mit der Node verbundenen Accounts, nur in Testumgebungen verwenden!
-     container_name: swarm-node-2
+     container_name: swarm-node-2_test
      ports:
        - 8501:8500
        - 30340:30399/udp
      volumes:
         - /eth-data-5:/root/.ethash
      networks:
-       chainnet:
-         ipv4_address: 172.25.0.112
+       chainnet_test:
+         ipv4_address: 172.26.0.112
 
   geth-explorer: #Container in dem eine Instanz von Blockchain Explorer läuft
-    hostname: geth-explorer
+    hostname: geth-explorer_test
     depends_on:
       - geth-node #Container auf dem dieser Container aufbaut
     environment: #Umgebungsvariablen die in den Container übergeben werden
@@ -155,14 +159,14 @@ services:
       - 8080:8080
     build:
       context: ./explorer
-    container_name: geth-explorer
+    container_name: geth-explorer_test
     networks:
-      chainnet:
-        ipv4_address: 172.25.0.125
+      chainnet_test:
+        ipv4_address: 172.26.0.125
 
   ether-viz:
-    hostname: ether-viz
-    container_name: ether-viz
+    hostname: ether-viz_test
+    container_name: ether-viz_est
     depends_on:
       - geth-node
     environment: #Umgebungsvariablen die in den Container übergeben werden
@@ -174,15 +178,15 @@ services:
     build:
       context: ./ether-viz
     networks:
-      chainnet:
-        ipv4_address: 172.25.0.135
+      chainnet_test:
+        ipv4_address: 172.26.0.135
 
 networks: #Netzwerk in dem sich alle Docker Container befinden
-  chainnet:
+  chainnet_test:
     driver: bridge
     ipam:
       config:
-      - subnet: 172.25.0.0/24
+      - subnet: 172.26.0.0/24
 
 volumes:
   eth-data-1:
