@@ -1,5 +1,4 @@
-FROM ubuntu:xenial
-ENV TZ='Europe/Berlin'
+FROM ubuntu:focal
 
 RUN echo $TZ > /etc/timezone \
      && apt-get update \
@@ -23,7 +22,7 @@ ENV address=""
 ENV bootnodeId=""
 ENV bootnodeIp=""
 
-CMD exec geth --bootnodes "enode://$bootnodeId@$bootnodeIp:30301" --networkid "1337" --verbosity=4 --rpc --rpcaddr "0.0.0.0" --rpcport 8545 --rpcapi "eth,web3,net,admin,debug,db,miner,personal" --rpccorsdomain "*" --ws --wsaddr "0.0.0.0" --wsapi "eth,web3,net,admin,debug,db,miner,personal" --wsport 8546 --wsorigins "*" --syncmode="full"
+CMD exec geth --bootnodes "enode://$bootnodeId@$bootnodeIp:30301" --networkid "1337" --verbosity=4 --http --http.addr "0.0.0.0" --http.port 8545 --http.api "eth,web3,net,admin,debug,db,miner,personal" --http.corsdomain "*" --ws --ws.addr "0.0.0.0" --ws.api "eth,web3,net,admin,debug,db,miner,personal" --ws.port 8546 --ws.origins "*" --syncmode="full"
 
 EXPOSE 8545
 EXPOSE 8546

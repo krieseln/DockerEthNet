@@ -1,4 +1,4 @@
-FROM ubuntu:xenial
+FROM ubuntu:focal
 ENV TZ='Europe/Berlin'
 
 RUN apt-get update \
@@ -22,9 +22,9 @@ ENV address=""
 ENV bootnodeId=""
 ENV bootnodeIp=""
 
-CMD exec geth --bootnodes "enode://$bootnodeId@$bootnodeIp:30301" --networkid "1337" --verbosity=4 --syncmode=full --mine --gasprice "0" --etherbase $address --unlock $address --password ~/.accountpassword --rpc --rpcaddr "0.0.0.0" --rpcport 8547 --rpcapi "eth,web3,net,admin,debug,db,miner,personal" --rpccorsdomain "*" --ws --wsaddr "0.0.0.0" --wsapi "eth,web3,net,admin,debug,db,miner,personal" --wsport 8548 --wsorigins "*" --allow-insecure-unlock
+CMD exec geth --bootnodes "enode://$bootnodeId@$bootnodeIp:30301" --networkid "1337" --verbosity=4 --syncmode=full --mine --miner.gasprice "0" --miner.etherbase $address --unlock $address --password ~/.accountpassword --http --http.addr "0.0.0.0" --http.port 8549 --http.api "eth,web3,net,admin,debug,db,miner,personal" --http.corsdomain "*" --ws --ws.addr "0.0.0.0" --ws.api "eth,web3,net,admin,debug,db,miner,personal" --ws.port 8550 --ws.origins "*" --allow-insecure-unlock
 
-EXPOSE 8547
-EXPOSE 8548
+EXPOSE 8549
+EXPOSE 8550
 EXPOSE 30303
 

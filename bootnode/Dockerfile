@@ -1,4 +1,4 @@
-FROM ubuntu:xenial
+FROM ubuntu:focal
 ENV TZ='Europe/Berlin'
 
 RUN apt-get update \
