@@ -3,9 +3,8 @@ A set of Docker images to create a local Ethereum network with three nodes and a
 
 The testnet consists out of multiple parts :
 * 1 Bootnode - registers existing nodes on the network, discovery service.
-* 2 Miners - Also called **sealers** with proof-of-authority. They validate the blocks. No RPC is exposed as they are required to be unlocked.
-* 1 Node - This serves as **transaction relay** and is a fullnode that does not mine, is locked but has RPC exposed
-* 2 Swarm nodes - These nodes make up the **peer-to-peer CDN**
+* 3 Miners - Also called **sealers** with proof-of-authority. They validate the blocks.
+* 2 Nodes - They serve as **transaction relay** and are fullnodes that do not mine.
 * 1 Blockchain explorer - Lightweight web application to explore the blockchain through web application. 
 
 ## Usage
@@ -22,17 +21,6 @@ The RPC Ports of the nodes are mapped to your localhost, the addresses are:
 * geth-dev-miner-1 : No RPC exposed
 * geth-dev-miner-2: No RPC exposed
 * geth-dev-node: [http://localhost:8545](http://localhost:8545)
-
-## Swarm (/BZZ:/)
-Swarm is a distributed storage platform and content distribution service, a native base layer service of the ethereum web3 stack. The primary objective of Swarm is to provide a sufficiently decentralized and redundant store of Ethereum’s public record, in particular to store and distribute dapp code and data as well as blockchain data. From an economic point of view, it allows participants to efficiently pool their storage and bandwidth resources in order to provide these services to all participants of the network, all while being incentivised by Ethereum. Files on Swarm are represented by their KECCAK256 Checksum.
-
-The RPC Ports of the nodes are mapped to your localhost, the addresses are:
-
-* [http://localhost:8500](http://localhost:8500) - geth-swarm-1
-* [http://localhost:8501](http://localhost:8501) - geth-swarm-2
-
-## Whisper (/SHH:/)
-Coming soon ...
 
 ## Blockchain Explorer
 The blockchain explorer is a simple node.js web application being provided by a seperate container: geth-explorer. The application uses the web3 javascript API to fetch the data from `geth-dev-node` through RPC calls. The blockchain explorer can be found at [http://localhost:8080](http://localhost:8080).
