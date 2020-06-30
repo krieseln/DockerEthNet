@@ -176,6 +176,8 @@ services:
       - TZ=Europe/Berlin #Setzen der Zeitzone um Netzwerkprobleme durch Zeitabweichungen zu verhindern
       - SET_CONTAINER_TIMEZONE=true #Setzen der Zeitzone um Netzwerkprobleme durch Zeitabweichungen zu verhindern
       - CONTAINER_TIMEZONE=Europe/Berlin #Setzen der Zeitzone um Netzwerkprobleme durch Zeitabweichungen zu verhindern
+    stdin_open: true
+    tty: true
     ports:
     - 3000:3000
     build:
