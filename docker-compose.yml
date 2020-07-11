@@ -44,7 +44,7 @@ services:
   miner-2:
     hostname: miner-2
     depends_on:
-      - bootnode #Container auf dem dieser Container aufbaut
+    - bootnode #Container auf dem dieser Container aufbaut
     environment: #Umgebungsvariablen die in den Container übergeben werden
       - address=0x3590aca93338b0721966a8d0c96ebf2c4c87c544 #Aus dem Private Key abgeleitete Adresse des Accounts der mit dem Miner verbunden wird
       - bootnodeId=76a8171707eca17647a47ca99ffd348927dfa60102792ea349a25d5192e61855be83b786e376276a306afcceea4ffd1c9c77e4370b417efc39f328a0d068004c #Aus dem nodekeyhex abgeleitete Enode ID der Bootnode

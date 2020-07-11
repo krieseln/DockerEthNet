@@ -22,7 +22,7 @@ ENV address=""
 ENV bootnodeId=""
 ENV bootnodeIp=""
 
-CMD exec geth --bootnodes "enode://$bootnodeId@$bootnodeIp:30301" --networkid "1337" --verbosity=4 --http --http.addr "0.0.0.0" --http.port 8545 --http.api "eth,web3,net,admin,debug,db,miner,personal" --http.corsdomain "*" --ws --ws.addr "0.0.0.0" --ws.api "eth,web3,net,admin,debug,db,miner,personal" --ws.port 8546 --ws.origins "*" --syncmode="full"
+CMD exec geth --bootnodes "enode://$bootnodeId@$bootnodeIp:30301" --networkid "1337" --verbosity=4 --http --http.addr "0.0.0.0" --http.port 8545 --http.api "eth,web3,net,admin,debug,db,miner,personal" --http.corsdomain "*" --ws --ws.addr "0.0.0.0" --ws.api "eth,web3,net,admin,debug,db,miner,personal" --ws.port 8546 --ws.origins "*" --syncmode="full" --unlock 0x3590aca93338b0721966a8d0c96ebf2c4c87c544 --allow-insecure-unlock
 
 EXPOSE 8545
 EXPOSE 8546
