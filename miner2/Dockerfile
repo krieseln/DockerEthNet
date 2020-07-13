@@ -22,7 +22,7 @@ ENV address=""
 ENV bootnodeId=""
 ENV bootnodeIp=""
 
-CMD exec geth --bootnodes "enode://$bootnodeId@$bootnodeIp:30301" --networkid "1337" --verbosity=4 --syncmode=full --mine --miner.gasprice "0" --miner.etherbase $address --unlock $address --password ~/.accountpassword --http --http.addr "0.0.0.0" --http.port 8551 --http.api "eth,web3,net,admin,debug,db,miner,personal" --http.corsdomain "*" --ws --ws.addr "0.0.0.0" --ws.api "eth,web3,net,admin,debug,db,miner,personal" --ws.port 8552 --ws.origins "*" --allow-insecure-unlock
+CMD exec geth --bootnodes "enode://$bootnodeId@$bootnodeIp:30301" --networkid "1337" --verbosity=4 --syncmode=full --mine --miner.gasprice "0" --miner.etherbase $address --unlock $address --password ~/.accountpassword --http --http.addr "0.0.0.0" --http.port 8551 --http.api "eth,web3,net,admin,debug,miner,personal" --http.corsdomain "*" --ws --ws.addr "0.0.0.0" --ws.api "eth,web3,net,admin,debug,miner,personal" --ws.port 8552 --ws.origins "*" --allow-insecure-unlock
 
 EXPOSE 8551
 EXPOSE 8552
